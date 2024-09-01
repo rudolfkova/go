@@ -2,15 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/rudolfkova/go/quests"
 	"time"
 )
 
-func Sleep(duration time.Duration) {
-	<-time.After(duration)
-}
-
 func main() {
 	fmt.Println("Начало программы")
-	Sleep(5 * time.Second)
+	quests.Sleep(5 * time.Second)
 	fmt.Println("Конец программы")
 }
