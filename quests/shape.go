@@ -1,4 +1,4 @@
-package shape
+package quests
 
 import "math"
 

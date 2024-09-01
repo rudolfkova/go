@@ -1,7 +1,6 @@
-package sleep
+package quests
 
 import (
-	"fmt"
 	"time"
 )
 
