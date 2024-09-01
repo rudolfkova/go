@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/rudolfkova/go/shape"
+	"time"
 )
 
+func Sleep(duration time.Duration) {
+	<-time.After(duration)
+}
+
 func main() {
-	var circle shape.Circle
-	circle.Radius = 10
-	fmt.Println(circle.Area())
-	fmt.Scanln()
+	fmt.Println("Начало программы")
+	Sleep(5 * time.Second)
+	fmt.Println("Конец программы")
 }
