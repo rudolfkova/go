@@ -1,3 +1,3 @@
-module github.com/rudolfkova/go
+module github.com/rudolfkova/tutor
 
 go 1.23.0
