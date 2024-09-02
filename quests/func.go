@@ -1,5 +1,6 @@
 package quests
 
+//Нахождение максимального значения в массиве
 func Max(nums ...int) int {
 	g := nums[0]
 	for i := 0; i < len(nums)-1; i++ {
@@ -10,6 +11,7 @@ func Max(nums ...int) int {
 	return g
 }
 
+//Определение чётности/нечётности, с выводом int и bool
 func EvenOdd(a int) (int, bool) {
 	if a%2 == 0 {
 		return a / 2, true
@@ -18,6 +20,7 @@ func EvenOdd(a int) (int, bool) {
 	}
 }
 
+//Генератор нечётных чисел
 func MakeOddGenerator() func() uint {
 	i := uint(0)
 	return func() (ret uint) {
@@ -29,6 +32,8 @@ func MakeOddGenerator() func() uint {
 		return
 	}
 }
+
+//Последовательность Фиббаначи
 func Fib(n int) int {
 	if n <= 1 {
 		return n
