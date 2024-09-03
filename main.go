@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/rudolfkova/tutor/quests"
@@ -23,10 +24,10 @@ func main() {
 		fmt.Println("4. Структуры и интерфейсы (shape)")
 		fmt.Println("5. Потоки (sleep)")
 		fmt.Println("6. Указатели (swap)")
-		fmt.Scanln(&userInput)
-		if userInput < 1 || userInput > 6 {
+		userInput = inputInt()
+		for userInput < 1 || userInput > 6 {
 			fmt.Println("Вы ввели неверное значение. Выберите из списка (1-6):")
-			fmt.Scanln(&userInput)
+			userInput = inputInt()
 		}
 		switch userInput {
 		case 1:
@@ -34,7 +35,12 @@ func main() {
 			fmt.Println("Выберите из списка:")
 			fmt.Println("1. Divided. Эта цункция выводит числа кратные трём (от 1 до 100)")
 			fmt.Println("2. FizzBuzz. Эта функция выводит числа кратные трём (Fizz) и пяти (Buzz)(от 1 до 100)")
-			fmt.Scanln(&flowInput)
+			flowInput = inputInt()
+			for flowInput < 1 || flowInput > 2 {
+				fmt.Println("Вы ввели неверное значение. Выберите из списка (1-2):")
+				flowInput = inputInt()
+
+			}
 			switch flowInput {
 			case 1:
 				fmt.Println("Результат:")
@@ -50,7 +56,12 @@ func main() {
 			fmt.Println("2. EvenOdd. Эта функция определяет, чётное или нечётное число передано в функцию и возвращает кратность двум.")
 			fmt.Println("3. MakeOddGenerator. Эта функция возвращает функцию, которая генерирует нечётное число")
 			fmt.Println("4. Fib. Последовательность Фиббхуесоса.")
-			fmt.Scanln(&funcInput)
+			funcInput = inputInt()
+			for funcInput < 1 || funcInput > 4 {
+				fmt.Println("Вы ввели неверное значение. Выберите из списка (1-4):")
+				funcInput = inputInt()
+
+			}
 			switch funcInput {
 			case 1:
 				fmt.Println("func Max(nums ...int) int")
@@ -64,7 +75,12 @@ func main() {
 					}
 					nums = append(nums, num)
 				}
-				fmt.Println("Результат: ", quests.Max(nums...))
+				out, err := quests.Max(nums...)
+				if err != nil {
+					fmt.Println("Ошибка: ", err)
+					break
+				}
+				fmt.Println("Результат: ", out)
 			case 2:
 				fmt.Println("func EvenOdd(a int) (int, bool)")
 				fmt.Println("Введите число для передачи в функцию:")
@@ -74,13 +90,23 @@ func main() {
 				a, evenOdd = quests.EvenOdd(a)
 				fmt.Println("Результат: ", a, evenOdd)
 			case 3:
+				var g int = 1
 				fmt.Println("func MakeOddGenerator() func() uint")
-				fmt.Println("Введите количество нечётных чисел")
-				var num int
-				fmt.Scanln(&num)
-				for i := 0; i < num; i++ {
-					oddGenerator := quests.MakeOddGenerator()
-					fmt.Println("Результат: ", oddGenerator())
+				fmt.Println("Данная функция генерирует нечётные числа. Каждый раз при вызове этой функции, генерируется следующее нечётное число")
+				for {
+					fmt.Println("Введите количество нечётных чисел")
+					var num int
+					fmt.Scanln(&num)
+					for i := 0; i < num; i++ {
+						oddGenerator := quests.MakeOddGenerator(&g)
+						fmt.Println("Результат: ", oddGenerator())
+					}
+					var makeOddGeneratorInput string = ""
+					fmt.Println("Для повтора нажмите enter (при этом будут генерироваться новые числа), чтобы выйти из цикла введите любой символ:")
+					fmt.Scanln(&makeOddGeneratorInput)
+					if makeOddGeneratorInput != "" {
+						break
+					}
 				}
 			case 4:
 				fmt.Println("func Fib(n int) int")
@@ -94,7 +120,12 @@ func main() {
 			fmt.Println("2. Max. Выводит максимальное число в заданном массиве")
 			fmt.Println("Выберите из списка:")
 			var massInput int
-			fmt.Scanln(&massInput)
+			massInput = inputInt()
+			for massInput < 1 || massInput > 2 {
+				fmt.Println("Вы ввели неверное значение. Выберите из списка (1-2):")
+				massInput = inputInt()
+
+			}
 			switch massInput {
 			case 1:
 				fmt.Println("func Min(x []int) int")
@@ -117,14 +148,14 @@ func main() {
 			fmt.Println("Определение площади и периметра фигур (Circle и Rectangle)")
 			fmt.Println("Введите радиус окружности:")
 			var r float64
-			fmt.Scanln(&r)
+			r = inputFloat64()
 			circle := quests.Circle{Radius: r}
 			fmt.Println("Введите первую сторону прямоугольника:")
 			var a float64
-			fmt.Scanln(&a)
+			a = inputFloat64()
 			fmt.Println("Введите вторую сторону прямоугольника:")
 			var b float64
-			fmt.Scanln(&b)
+			b = inputFloat64()
 			rectangle := quests.Rectangle{Width: a, Height: b}
 			fmt.Println("Результат:")
 			fmt.Println("Площадь окружности: ", circle.Area())
@@ -135,7 +166,7 @@ func main() {
 			fmt.Println("func Sleep(duration time.Duration)")
 			fmt.Println("Функция ожидания (через time.After). Введите число секунд до завершения функции:")
 			var sec int
-			fmt.Scanln(&sec)
+			sec = inputInt()
 			duration := time.Duration(sec) * time.Second
 			fmt.Println("Начало ожидания...")
 			quests.Sleep(duration)
@@ -145,13 +176,51 @@ func main() {
 			fmt.Println("Данная функция меняет местами две переменные")
 			fmt.Println("Введите первое значение в переменную a:")
 			var a int
-			fmt.Scanln(&a)
+			a = inputInt()
 			fmt.Println("Введите второе значение в переменную b:")
 			var b int
-			fmt.Scanln(&b)
+			b = inputInt()
 			fmt.Println("a = ", a, "b = ", b)
 			quests.Swap(&a, &b)
 			fmt.Println("Результат: a = ", a, ", b = ", b)
 		}
 	}
+}
+
+// Проверка введённых пользователем данных. int
+func inputInt() int {
+	var userInput string
+	var num int
+	var err error
+	fmt.Println("Введите целое число:")
+	for {
+		fmt.Scanln(&userInput)
+
+		num, err = strconv.Atoi(userInput)
+		if err == nil {
+			break
+		} else {
+			fmt.Println("Ошибка: введите целое число.")
+		}
+	}
+	return num
+}
+
+// Проверка введённых пользователем данных. float64
+func inputFloat64() float64 {
+	var userInput string
+	var num float64
+	var err error
+	fmt.Println("Введите целое число:")
+	for {
+		fmt.Scanln(&userInput)
+
+		num, err = strconv.ParseFloat(userInput, 5)
+		if err == nil {
+			break
+		} else {
+			fmt.Println("Ошибка: введите целое число.")
+		}
+	}
+	return num
 }

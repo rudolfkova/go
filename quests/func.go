@@ -1,14 +1,19 @@
 package quests
 
+import "fmt"
+
 //Нахождение максимального значения в массиве
-func Max(nums ...int) int {
+func Max(nums ...int) (int, error) {
+	if len(nums) == 0 {
+		return 0, fmt.Errorf("массив чисел пуст")
+	}
 	g := nums[0]
 	for i := 0; i < len(nums)-1; i++ {
 		if g < nums[i] {
 			g = nums[i]
 		}
 	}
-	return g
+	return g, nil
 }
 
 //Определение чётности/нечётности, с выводом int и bool
@@ -21,13 +26,12 @@ func EvenOdd(a int) (int, bool) {
 }
 
 //Генератор нечётных чисел
-func MakeOddGenerator() func() uint {
-	i := uint(0)
-	return func() (ret uint) {
-		ret = i
-		i += 1
-		if i%2 == 0 {
-			i += 1
+func MakeOddGenerator(g *int) func() int {
+	return func() (ret int) {
+		ret = *g
+		*g += 1
+		if *g%2 == 0 {
+			*g += 1
 		}
 		return
 	}
