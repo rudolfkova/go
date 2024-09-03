@@ -128,7 +128,7 @@ func main() {
 			rectangle := quests.Rectangle{Width: a, Height: b}
 			fmt.Println("Результат:")
 			fmt.Println("Площадь окружности: ", circle.Area())
-			fmt.Println("Периметр окружности: ", circle.Area())
+			fmt.Println("Периметр окружности: ", circle.Perimeter())
 			fmt.Println("Площадь прямоугольника: ", rectangle.Area())
 			fmt.Println("Периметр прямоугольника: ", rectangle.Perimeter())
 		case 5:
