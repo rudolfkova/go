@@ -19,5 +19,6 @@ func MinComp() {
 		37, 34, 83, 27,
 		19, 97, 9, 17,
 	}
+	fmt.Println(x)
 	fmt.Println(Min(x))
 }
