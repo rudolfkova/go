@@ -39,8 +39,9 @@ func MakeOddGenerator(g *int) func() int {
 
 //Последовательность Фиббаначи
 func Fib(n int) int {
-	if n <= 1 {
-		return n
+	a, b := 0, 1
+	for i := 0; i < n; i++ {
+		a, b = b, a+b
 	}
-	return Fib(n-1) + Fib(n-2)
+	return a
 }

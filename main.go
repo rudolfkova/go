@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"time"
 
@@ -97,6 +98,9 @@ func main() {
 					fmt.Println("Введите количество нечётных чисел")
 					var num int
 					fmt.Scanln(&num)
+					if num < 0 {
+						fmt.Println("Старайтесь не вводить числа меньше нуля")
+					}
 					for i := 0; i < num; i++ {
 						oddGenerator := quests.MakeOddGenerator(&g)
 						fmt.Println("Результат: ", oddGenerator())
@@ -139,7 +143,12 @@ func main() {
 					}
 					mass = append(mass, num)
 				}
-				fmt.Println("Результат: ", quests.Min(mass))
+				m, err := quests.Min(mass)
+				if err != nil {
+					fmt.Println("Ошибка: ", err)
+					break
+				}
+				fmt.Println("Результат: ", m)
 			case 2:
 				fmt.Println("func MinComp()")
 				quests.MinComp()
@@ -190,12 +199,12 @@ func main() {
 // Проверка введённых пользователем данных. int
 func inputInt() int {
 	var userInput string
-	var num int
+	var num int = 0
 	var err error
 	fmt.Println("Введите целое число:")
 	for {
 		fmt.Scanln(&userInput)
-
+		userInput = regexp.MustCompile(",").ReplaceAllString(userInput, ".")
 		num, err = strconv.Atoi(userInput)
 		if err == nil {
 			break
@@ -209,13 +218,13 @@ func inputInt() int {
 // Проверка введённых пользователем данных. float64
 func inputFloat64() float64 {
 	var userInput string
-	var num float64
+	var num float64 = 0.0
 	var err error
 	fmt.Println("Введите целое число:")
 	for {
 		fmt.Scanln(&userInput)
-
-		num, err = strconv.ParseFloat(userInput, 5)
+		userInput = regexp.MustCompile(",").ReplaceAllString(userInput, ".")
+		num, err = strconv.ParseFloat(userInput, 64)
 		if err == nil {
 			break
 		} else {
